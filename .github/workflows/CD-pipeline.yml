@@ -1,0 +1,25 @@
+name: CD Pipeline
+
+on:
+  workflow_run:
+    workflows: ["CI Pipeline"]
+    types:
+      - completed
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+    - name: Clean up Docker resources
+      run: |
+        sudo docker system prune -af
+
+    - name: Pull Docker image from Dockerhub
+      run: sudo docker pull dibakar7/lawcrats-backend:latest
+
+    - name: Delete Old docker container
+      run: sudo docker rm -f lawcrats-backend-container || true
+#kkkk
+    - name: Run Docker Container
+      run: sudo docker run -d -p 80:80 --name lawcrats-backend dibakar7/lawcrats-backend:latest

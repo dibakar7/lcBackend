@@ -1,0 +1,20 @@
+version: '3.8'  # Use a compatible version
+
+services:
+  web:
+    build:
+      context: .  # Build from the current directory where the Dockerfile is located
+      dockerfile: Dockerfile  # Ensure Dockerfile is correctly named or modify if needed
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py collectstatic --noinput &&
+             gunicorn CommonLawCratsBackend.wsgi:application --bind 0.0.0.0:8000"
+    volumes:
+      - .:/app  # Mount the current directory to /app in the container
+    ports:
+      - "8005:8000"  # Map host port 8005 to container port 8000
+    environment:
+      - DJANGO_SETTINGS_MODULE=CommonLawCratsBackend.settings  # Ensure settings module is correctly specified
+      - DEBUG=0  # Turn off Django debug mode in production
+      - ALLOWED_HOSTS=*  # Set allowed hosts, adjust for production security
+    restart: always  # Auto-restart container if it fails

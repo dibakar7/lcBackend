@@ -1,0 +1,9 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/venv
+venv
+db.sqlite3
+__pycache__
+__pycache__/
+*.pyc
