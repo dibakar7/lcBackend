@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     
     'rest_framework.authtoken',
     'rest_framework_social_oauth2',
+    'whitenoise.runserver_nostatic',
 ]
 
 ASGI_APPLICATION = 'CommonLawCratsBackend.asgi.application'
@@ -81,8 +82,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    
-     'allauth.account.middleware.AccountMiddleware',  
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'allauth.account.middleware.AccountMiddleware',  
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
